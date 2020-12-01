@@ -14,6 +14,7 @@ namespace codeSpaceA
   //#include "simple_movement.c"
 
   #include "buddy_tx.c"
+  int x;
 
 }
 namespace codeSpaceB
