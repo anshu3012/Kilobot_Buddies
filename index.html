@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+
+<!--
+# The MIT License (MIT)
+#
+# Copyright (c) January, 2015 michael otte
+# Copyright (c) April, 2020 michael otte, University of Maryland
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        
+    <style>
+        table, th, td 
+        {
+          border: 0px solid black;
+          border-collapse: collapse;
+        }
+        th,td 
+        {
+          padding: 5px;
+          padding-left: 0px;
+          padding-right: 10px;
+        }
+    </style> 
+
+    <script type='text/javascript'>
+        // Global variables for user interaction
+
+
+
+        var display_com_rads = 0; 
+        var display_graph = 0;
+        var display_debugging_log = 1;
+
+        // functions used display the global variables in html
+        function display_display_com_rads()
+        {
+          document.getElementById("status_display_com_rads").innerHTML = "display_com_rads: " + display_com_rads; 
+        }
+
+        function display_display_graph()
+        {
+          document.getElementById("status_display_graph").innerHTML = "display_graph: " + display_graph; 
+        }
+
+        function display_display_debugging_log()
+        {
+          document.getElementById("status_display_debugging_log").innerHTML = "display_debugging_log: " + display_debugging_log; 
+        }
+
+        function print_debugging_log(log_data)
+        {
+          document.getElementById("debugging_log").innerHTML = log_data; 
+        }
+
+
+
+
+        // functions that access and change the global variables for user interaction
+        function toggle_display_com_rads()
+        {
+          if(display_com_rads == 0)
+          {
+            display_com_rads = 1;
+          }
+          else
+          {
+            display_com_rads = 0;
+          }
+          display_display_com_rads();
+        }
+
+        function toggle_display_graph()
+        {
+          if(display_graph == 0)
+          {
+            display_graph = 1;
+          }
+          else
+          {
+            display_graph = 0;
+          }
+          display_display_graph();
+        }
+
+        function toggle_display_debugging_log()
+        {
+          if(display_debugging_log == 0)
+          {
+            display_debugging_log = 1;
+          }
+          else
+          {
+            display_debugging_log = 0;
+          }
+          display_display_debugging_log();
+        }
+
+
+
+        // functions used to return values to the C/C++ side of the code
+        function get_display_com_rads(iv)
+        {
+          input_var = iv;
+          return display_com_rads;
+        }
+
+        function get_display_graph()
+        {
+          return display_graph;
+        }
+
+        function get_display_debugging_log()
+        {
+          return display_debugging_log;
+        }
+    </script> 
+
+</head>
+
+<body>
+
+    <!-- init stuff-->
+    <script type='text/javascript'>
+        window.onload = function() 
+        {
+           display_display_com_rads();
+           display_display_graph();
+           display_display_debugging_log();
+        };
+
+    </script>
+
+
+<table>
+  <tr>
+    <td>
+
+      <!-- Create the canvas that the C++ code will draw into -->
+      <canvas id="canvas" oncontextmenu="event.preventDefault()" width="500" height="500" ></canvas>
+
+    </td>
+
+    <td>
+
+
+<table>
+  <tr>
+    <td>
+      <table>
+        <tr>
+          <td><button onclick="toggle_display_debugging_log()">Display Debugging Log</button> </td>
+          <td id="status_display_debugging_log" style = "color:green; font-weight:bold;"></td>
+        </tr>
+      </td>
+    </table>
+  </tr>
+  <tr>
+    <td id="debugging_log" style = "color:black;"></td>
+  </tr>
+</table> 
+
+
+    </td>
+  </tr>
+</table> 
+
+
+
+    <!-- Allow the C++ to access the canvas element --> 
+    <script type='text/javascript'>
+        var canv = document.getElementById('canvas');
+        var Module = {
+            canvas: canv
+        };
+    </script>
+
+
+
+    <!-- Call the javascript that has been generated by Emscripten -->
+    <script src="index.js"></script>
+    
+    <!-- javascript calls these C++ functions -->
+    <!-- depriciated in favor of direct C callbacks -->
+    <!--- script type='text/javascript'>
+        canv.addEventListener('click',    _on_click_or_touch, false);
+        canv.addEventListener('touchend', _on_click_or_touch, false);
+    </script>
+
+
+    <!-- buttons for user interaction -->
+    <hr>
+
+ <table>
+  <tr>
+    <td><button onclick="toggle_display_com_rads()">Display Communication Radii</button> </td>
+    <td id="status_display_com_rads" style = "color:green; font-weight:bold;"></td>
+  </tr>
+  <tr>
+    <td><button onclick="toggle_display_graph()">Display Communication Graph</button> </td>
+    <td id="status_display_graph" style = "color:green; font-weight:bold;"></td>
+  </tr>
+</table> 
+
+
+    
+     
+
+
+    <!-- other stuff -->
+
+    <p>Text can go here</p>
+    <hr>
+</body>
+
+</html>

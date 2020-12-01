@@ -1,0 +1,159 @@
+﻿Goal: get a kilobot simulator working in a web browser for which we can write normal c code (that would normally compile down into a hex) and have each robot in the swarm run that code.
+
+Using a web browser suggests using javaScript. 
+
+We will use Emscripten which is a way to compile C code so that it can be called by JavaScript
+
+Emscripten:
+https://emscripten.org/docs/introducing_emscripten/about_emscripten.html
+
+more info:
+https://developer.mozilla.org/en-US/docs/Mozilla/Projects/Emscripten
+
+
+------------------------------------ UBUNTU -------------------------------------
+
+Installing Ubuntu:
+https://docs.microsoft.com/en-us/windows/wsl/install-win10
+Follow the directions on this website and get Ubuntu from the Microsoft Store
+
+
+Installing Emscripten (on ubuntu):
+https://emscripten.org/docs/getting_started/downloads.html
+
+
+--- install ubuntu prerequisites ----
+it looks like we need to install the following prerequisites 
+(the first 2 were already installed for me):
+
+
+# Install Python
+sudo apt-get install python2.7
+
+# Install CMake (optional, only needed for tests and building Binary)
+sudo apt-get install cmake
+
+# Install Java (optional, only needed for Closure Compiler minification)
+sudo apt-get install default-jre
+
+# Install git
+sudo apt-get install git-core
+
+--- install the Emscripten SDK ----
+
+Go to the directory where you want to install this stuff, I did this in the directory containing this readme
+cd [where you want]
+
+# Get the emsdk repo
+git clone https://github.com/emscripten-core/emsdk.git
+
+# Enter that directory
+cd emsdk
+
+# Fetch the latest version of the emsdk (not needed the first time you clone)
+git pull
+
+# Download and install the latest SDK tools.
+./emsdk install latest
+
+# Make the "latest" SDK "active" for the current user. (writes ~/.emscripten file)
+./emsdk activate latest
+
+# Activate PATH and other environment variables in the current terminal
+source ./emsdk_env.sh
+
+### NOTES git pull will fetch the current list of tags, but very recent ones may not yet be present there. 
+### You can run ./emsdk update-tags to update the list of tags directly.
+### 
+### If you change the location of the SDK (e.g. take it to another computer on an USB), 
+### re-run the ./emsdk activate latest and source ./emsdk_env.sh commands.
+
+
+---- updating the sdk (if some time has passed since the install ----
+
+# Fetch the latest registry of available tools.
+./emsdk update
+
+# Download and install the latest SDK tools.
+./emsdk install latest
+
+# Set up the compiler configuration to point to the "latest" SDK.
+./emsdk activate latest
+
+# Activate PATH and other environment variables in the current terminal
+source ./emsdk_env.sh
+
+# ----------------------- quick start for working on code ----------------------------
+
+## In one terminal after above initialization
+
+emcc -v
+
+cd [directory from where "code for kilobot simulator" is]
+#NOTE: for Ubuntu C:\ is written as /mnt/c/
+you need to replace all \ with / when writing the directory
+space can't be used in a directory, need to rename and replace with _
+
+# start python webserver (in one terminal, make sure to do it from the "code for kilobot simulator" directory):
+python3 -m http.server 8080 
+
+
+## In another terminal, after doing initialization again
+
+# compile code (from the emsdk directory)
+source ./emsdk/emsdk_env.sh
+
+cd [directory from where "code for kilobot simulator" is]
+
+emcc -v
+
+# [this has been replaced by what is below] emcc main.cpp -std=c++11 -s WASM=1 -s USE_SDL=2 -O3 -o index.js
+# [this has been replaced by what is below] emcc main.cpp -std=c++11 -s USE_PTHREADS=1 -s WASM=1 -s USE_SDL=2 -O3 -o index.js
+
+(make sure to do it from the "code for kilobot simulator" directory):
+emcc main.cpp -std=c++11 -s USE_PTHREADS=1 -s WASM=1 -s USE_SDL=2 -O3 -o index.js --embed-file light_patterns
+
+# in a google chrome browser:
+http://localhost:8080/index.html
+	
+
+################################################################################
+
+Open Terminal 1
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+source ./emsdk/emsdk_env.sh
+emcc -v
+Change directory to Kilobots ( cd ~/Desktop/Kilobots) 
+python3 -m http.server 8080
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+Open Terminal 2
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+source ./emsdk/emsdk_env.sh
+cd ~/Desktop/Kilobots
+emcc -v
+emcc main.cpp -std=c++11 -s USE_PTHREADS=1 -s WASM=1 -s USE_SDL=2 -O3 -o index.js --embed-file light_patterns
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+# in a google chrome browser:
+http://localhost:8080/index.html
+
+################################################################################
+WINDOWS
+
+Assuming emscripten is intalled and everything
+
+#Open terminal in "code for kilobot simulator" directory and start server
+
+	C:\Users\anshu\Documents\UMD\Thesis\test
+	python -m http.server 8080 
+	
+#Open terminal 2 and source emsdk 
+	cd C:\Users\anshu\Documents\UMD\Thesis\emsdk
+	emsdk_env.bat
+	
+#start webpage 
+	C:\Users\anshu\Documents\UMD\Thesis\test
+	emcc main.cpp -std=c++11 -s USE_PTHREADS=1 -s WASM=1 -s USE_SDL=2 -O3 -o index.js --embed-file light_patterns
+
+

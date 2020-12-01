@@ -1,0 +1,19 @@
+
+-- void spinup_motors();
+
+-- make not useing checksum break things
+
+--- add exicution speed control
+
+-- corral for robots where we can put them and they will not do anything
+
+-- add temperature
+
+---- int16_t get_temperature();
+
+-- add voltage?
+
+----- int16_t get_voltage();
+
+
+free globals used in individual robots
