@@ -3,6 +3,8 @@
 
 // NOTE: due to a bug, due to a bug, make sure each has at least some valid include file in it right now
 
+//nice!
+
 namespace codeSpaceA
 {
   //#include "rainbow.c"
