@@ -145,7 +145,7 @@ Assuming emscripten is intalled and everything
 
 #Open terminal in "code for kilobot simulator" directory and start server
 
-	C:\Users\anshu\Documents\UMD\Thesis\test
+	C:\Users\anshu\Documents\UMD\Thesis\Kilobot_Buddies
 	python -m http.server 8080 
 	
 #Open terminal 2 and source emsdk 
@@ -153,7 +153,7 @@ Assuming emscripten is intalled and everything
 	emsdk_env.bat
 	
 #start webpage 
-	C:\Users\anshu\Documents\UMD\Thesis\test
+	C:\Users\anshu\Documents\UMD\Thesis\Kilobot_Buddies
 	emcc main.cpp -std=c++11 -s USE_PTHREADS=1 -s WASM=1 -s USE_SDL=2 -O3 -o index.js --embed-file light_patterns
 
 
