@@ -156,4 +156,5 @@ Assuming emscripten is intalled and everything
 	cd C:\Users\anshu\Documents\UMD\Thesis\Kilobot_Buddies
 	emcc main.cpp -std=c++11 -s USE_PTHREADS=1 -s WASM=1 -s USE_SDL=2 -O3 -o index.js --embed-file light_patterns
 
-
+# in a google chrome browser:
+http://localhost:8080/index.html
