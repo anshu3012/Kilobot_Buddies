@@ -38,7 +38,7 @@ void loop()
     // RIGHT TURN (requires left motor on)
     set_motors(kilo_turn_left, 0);
 
-    set_color(RGB(0,0,1));
+    set_color(RGB(1,0,1));
   }
   else if(g->state == 1)
   {
@@ -52,11 +52,11 @@ void loop()
     // LEFT TURN (requires right motor on)
     set_motors(0, kilo_turn_right);
 
-    set_color(RGB(0,0,1));
+    set_color(RGB(0,1,1));
   }
   else if(g->state == 3)
   {
-    set_color(RGB(0,0,1));
+    set_color(RGB(1,1,1));
 
     // STOP (requires both motors off)
     set_motors(0, 0);
