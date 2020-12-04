@@ -1,3 +1,6 @@
+
+
+//Contains the function used to move buddies togther 
 void drive_buddies_for_duration(ROBOT* bot, SWARM* swarm,  float dt)
 {
   int i;
