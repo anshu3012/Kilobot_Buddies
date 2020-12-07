@@ -143,7 +143,7 @@ ROBOT* random_robot(float* pose_min, float* pose_max, float radius, float com_ra
 {
   float x_pose = rand_f_between(pose_min[0], pose_max[0]);
   float y_pose = rand_f_between(pose_min[1], pose_max[1]);
-  //float theta_pose = rand_f_between(0.0f, 2.0f * PI);
+  //float theta_pose = rand_f_between(0.0f, 2.0f * PI); //uncomment if you need random pose 
 
   float theta_pose=0.5*PI;
 
@@ -287,7 +287,7 @@ SWARM* make_rand_swarm(int num_robots, float x_pose_min, float x_pose_max, float
   int k;
   for(k = 0; k < 3; k++)
   {
-    rand_color[k] = 0.1;
+    rand_color[i] = 0.1;
   }
 
   
