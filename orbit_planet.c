@@ -119,6 +119,11 @@ void loop()
           set_motion(FORWARD);
           delay(200);
         }
+        //star planet situation where you want the planets to stop if within a certain distance to star
+        else if(g->distance==25 || g->distance==26||g->distance==27||g->distance==27||g->distance==29||g->distance==30||g->distance==31||g->distance==32||g->distance==33)
+        {
+          set_motion(STOP);
+        }
         else
         {
            // in ok region, so move straight

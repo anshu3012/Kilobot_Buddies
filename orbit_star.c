@@ -44,13 +44,14 @@ void loop()
         // Reset flag so LED is only blinked once per message.
         g->message_sent = 0;
         
-        set_color(RGB(1, 0, 1));
+        set_color(RGB(0, 1, 1));
         delay(100);
         set_color(RGB(0, 0, 0));
     }
 
 
     log_message("Im a star");
+    log_message("ID  %d ", (int)(kilo_uid));
     delay(100);
 
 }

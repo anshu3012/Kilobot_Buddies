@@ -1,1 +1,1 @@
-#define NUM_ROBOTS 8
+#define NUM_ROBOTS 16

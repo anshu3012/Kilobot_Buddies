@@ -13,8 +13,8 @@ namespace codeSpaceA
   //#include "num_neighbors.c"
   //#include "simple_movement.c"
 
-  #include "buddy_tx.c"
-  int x;
+  #include "orbit_planet.c"
+ 
 
 }
 namespace codeSpaceB
@@ -23,7 +23,7 @@ namespace codeSpaceB
   //#include "num_neighbors.c"
   //#include "simple_movement.c"
 
-  #include "buddy_rx.c"
+  #include "orbit_star.c"
 }
 namespace codeSpaceC
 {
@@ -52,16 +52,13 @@ void doCodeSpaceMap()
 {
   for(int i = 0; i < NUM_ROBOTS; i++)
   {
-    codeSpaceMap[i] = E;
-
+    codeSpaceMap[i] = A;
   }
 
-  /*
+  //if you want star planet situation 
+  //0 is the first robot 
+  //NUM_ROBOTS/2 is the pair robot 
+  //not sure why it works that way but it works
   codeSpaceMap[0] = B;
-  codeSpaceMap[1] = B;
-  codeSpaceMap[2] = B;
-  codeSpaceMap[3] = B;
-  codeSpaceMap[4] = B;
-  */
-
+  codeSpaceMap[NUM_ROBOTS/2] = B;
 }
